@@ -1,0 +1,192 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* NỀN */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("../Assets/bglogin.jpg") no-repeat center center / cover;
+  font-family: "Poppins", sans-serif;
+}
+
+/* KHUNG CHÍNH */
+.auth-container {
+  width: 420px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(25px);
+  border-radius: 12px;
+  color: #fff;
+  padding: 35px 40px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+/* TIÊU ĐỀ */
+.auth-title {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Ô NHẬP */
+.auth-input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 25px 0;
+}
+
+.auth-input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 40px;
+  outline: none;
+  font-size: 16px;
+  color: #fff;
+  padding: 0 45px 0 20px;
+  transition: border-color 0.2s ease;
+}
+
+.auth-input-box input:focus {
+  border-color: #00ffff;
+}
+
+.auth-input-box input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* NHỚ MẬT KHẨU & QUÊN MẬT KHẨU */
+.auth-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  margin: -10px 0 20px;
+}
+
+.auth-options label input {
+  accent-color: #fff;
+  margin-right: 5px;
+}
+
+.auth-options a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-options label:hover,
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #00ffcc;
+}
+
+/* NÚT CHÍNH */
+.auth-button {
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 15px #00ffff;
+}
+
+/* THÔNG BÁO */
+.auth-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.auth-message.success {
+  color: #00ff99;
+}
+
+.auth-message.error {
+  color: #ff6666;
+}
+
+.auth-icon-message {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+/* FOOTER */
+.auth-footer {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.auth-footer p {
+  line-height: 1.5;
+}
+
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: #00ffff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: 600;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.auth-link-btn:hover {
+  color: #00ccff;
+}
+
+/* HIỆU ỨNG NHẸ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
