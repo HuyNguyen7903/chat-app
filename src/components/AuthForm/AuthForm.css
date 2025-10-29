@@ -1,192 +1,219 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* NỀN */
 body {
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: url("../Assets/bglogin.jpg") no-repeat center center / cover;
-  font-family: "Poppins", sans-serif;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
 }
 
-/* KHUNG CHÍNH */
-.auth-container {
-  width: 42rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 0.2rem solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(2.5rem);
-  border-radius: 1.2rem;
-  color: #fff;
-  padding: 3.5rem 4rem;
-  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.auth-container:hover {
-  transform: translateY(-0.2rem);
-  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.6);
-}
-
-/* TIÊU ĐỀ */
-.auth-title {
-  font-size: 3.6rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-/* Ô NHẬP */
-.auth-input-box {
+.container {
+  background-color: #fff;
+  border-radius: 3rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
   position: relative;
-  width: 100%;
-  height: 5rem;
-  margin: 2.5rem 0;
+  overflow: hidden;
+  width: 76.8rem;
+  max-width: 100%;
+  min-height: 48rem;
 }
 
-.auth-input-box input {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: 0.2rem solid rgba(255, 255, 255, 0.25);
-  border-radius: 4rem;
-  outline: none;
-  font-size: 1.6rem;
-  color: #fff;
-  padding: 0 4.5rem 0 2rem;
-  transition: border-color 0.2s ease;
+.container p {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  letter-spacing: 0.03rem;
+  margin: 2rem 0;
 }
 
-.auth-input-box input:focus {
-  border-color: #00ffff;
+.container span {
+  font-size: 1.2rem;
 }
 
-.auth-input-box input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.auth-icon {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.8rem;
-  opacity: 0.8;
-}
-
-/* NHỚ MẬT KHẨU & QUÊN MẬT KHẨU */
-.auth-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.5rem;
-  margin: -1rem 0 2rem;
-}
-
-.auth-options label input {
-  accent-color: #fff;
-  margin-right: 0.5rem;
-}
-
-.auth-options a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.auth-options label:hover,
-a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #00ffcc;
-}
-
-/* NÚT CHÍNH */
-.auth-button {
-  width: 100%;
-  height: 4.5rem;
-  background: #fff;
-  border: none;
-  border-radius: 4rem;
-  font-size: 1.6rem;
+.container a {
   color: #333;
-  font-weight: 700;
+  font-size: 1.3rem;
+  text-decoration: none;
+  margin: 1.5rem 0 1rem;
+}
+
+.container button {
+  background-color: #512da8;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 1rem 4.5rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  margin-top: 1rem;
   cursor: pointer;
-  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
 }
 
-.auth-button:hover {
-  background: #00ffff;
-  color: #000;
-  box-shadow: 0 0 1.5rem #00ffff;
+.container button.hidden {
+  background-color: transparent;
+  border-color: #fff;
 }
 
-/* THÔNG BÁO */
-.auth-message {
+.container form {
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 1.8rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
+  flex-direction: column;
+  padding: 0 4rem;
+  height: 100%;
 }
 
-.auth-message.success {
-  color: #00ff99;
-}
-
-.auth-message.error {
-  color: #ff6666;
-}
-
-.auth-icon-message {
-  font-size: 1.8rem;
-  vertical-align: middle;
-}
-
-/* FOOTER */
-.auth-footer {
-  font-size: 1.45rem;
-  text-align: center;
-  margin: 2.5rem 0 1rem;
-}
-
-.auth-footer p {
-  line-height: 1.5;
-}
-
-.auth-link-btn {
-  background: none;
+.container input {
+  background-color: #eee;
   border: none;
-  color: #00ffff;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: inherit;
-  font-weight: 600;
-  padding: 0;
-  transition: color 0.2s ease;
+  margin: 0.8rem 0;
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: 0.8rem;
+  width: 100%;
+  outline: none;
 }
 
-.auth-link-btn:hover {
-  color: #00ccff;
+.icon svg {
+  font-size: 2rem;
+  color: #512da8;
 }
 
-/* HIỆU ỨNG NHẸ */
-@keyframes fadeIn {
-  from {
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.sign-in {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.container.active .sign-in {
+  transform: translateX(100%);
+}
+
+.sign-up {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: move 0.6s;
+}
+
+@keyframes move {
+  0%,
+  49.99% {
     opacity: 0;
-    transform: translateY(0.5rem);
+    z-index: 1;
   }
-  to {
+  50%,
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    z-index: 5;
   }
+}
+
+.social-icons {
+  margin: 2rem 0;
+}
+
+.social-icons a {
+  border: 0.1rem solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.3rem;
+  width: 4rem;
+  height: 4rem;
+  transition: 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 15rem 0 0 10rem;
+  z-index: 1000;
+}
+
+.container.active .toggle-container {
+  transform: translateX(-100%);
+  border-radius: 0 15rem 10rem 0;
+}
+
+.toggle {
+  background-color: #512da8;
+  height: 100%;
+  background: linear-gradient(to right, #5c6bc0, #512da8);
+  color: #fff;
+  position: relative;
+  left: -100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.container.active .toggle {
+  transform: translateX(50%);
+}
+
+.toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 3rem;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle-left {
+  transform: translateX(-200%);
+}
+
+.container.active .toggle-left {
+  transform: translateX(0);
+}
+
+.toggle-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.container.active .toggle-right {
+  transform: translateX(200%);
 }

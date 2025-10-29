@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import LoginForm from "./components/AuthForm/LoginForm";
-import SignupForm from "./components/AuthForm/SignupForm";
 import ChatRoom from "./components/ChatRoom/Index/Index";
-function App() {
-  // const [isLogin, setIsLogin] = useState(true);
+import AuthForm from "./components/AuthForm/AuthForm";
 
-  // return (
-  //   <div>
-  //     {isLogin ? (
-  //       <LoginForm onSwitch={() => setIsLogin(false)} />
-  //     ) : (
-  //       <SignupForm onSwitch={() => setIsLogin(true)} />
-  //     )}
-  //   </div>
-  // );
-  return <ChatRoom />;
+function App() {
+  return (
+    <>
+      {/* <ChatRoom /> */}
+      <AuthForm />
+    </>
+  );
 }
 
 export default App;
