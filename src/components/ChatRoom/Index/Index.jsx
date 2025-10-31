@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import MainChat from "../MainChat/MainChat";
+import InfoUser from "../InfoUser/InfoUser";
 import "./Index.css";
 
 export default function ChatRoom() {
   const [theme, setTheme] = useState("dark");
+  const [showInfo, setShowInfo] = useState(false);
 
   const [chats, setChats] = useState([
     {
@@ -90,7 +92,6 @@ export default function ChatRoom() {
   ]);
 
   const [selectedChat, setSelectedChat] = useState(chats[0]);
-
   const [filter, setFilter] = useState("all");
 
   const handleSelectChat = (chat) => {
@@ -99,6 +100,7 @@ export default function ChatRoom() {
     );
     setChats(updated);
     setSelectedChat(chat);
+    setShowInfo(false);
   };
 
   const filteredChats = chats.filter((chat) => {
@@ -118,7 +120,22 @@ export default function ChatRoom() {
         filter={filter}
         setFilter={setFilter}
       />
-      <MainChat chat={selectedChat} theme={theme} />
+
+      <MainChat
+        chat={selectedChat}
+        theme={theme}
+        onToggleInfo={() => setShowInfo(!showInfo)}
+      />
+
+      {showInfo && (
+        <div className="info-user">
+          <InfoUser
+            onClose={() => setShowInfo(false)}
+            chat={selectedChat}
+            theme={theme}
+          />
+        </div>
+      )}
     </div>
   );
 }

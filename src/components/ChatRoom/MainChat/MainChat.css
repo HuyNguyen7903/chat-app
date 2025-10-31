@@ -225,10 +225,6 @@
 }
 
 /* LIGHT THEME */
-.main-chat.light {
-  background-color: #ffffff;
-  color: #050505;
-}
 
 .main-chat.light .chat-header {
   background-color: #f0f2f5;

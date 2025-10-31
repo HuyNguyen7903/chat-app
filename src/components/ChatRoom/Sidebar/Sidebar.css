@@ -186,6 +186,11 @@
   color: #f5f6f7;
 }
 
+.chat-room.dark .info-user-container {
+  background-color: #18191a;
+  color: #f5f6f7;
+}
+
 .chat-room.dark .sidebar-search input {
   background-color: #3a3b3c;
   color: #e4e6eb;
@@ -228,6 +233,11 @@
 }
 
 .chat-room.light .main-chat {
+  background-color: #ffffff;
+  color: #1c1e21;
+}
+
+.chat-room.light .info-user-container {
   background-color: #ffffff;
   color: #1c1e21;
 }

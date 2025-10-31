@@ -3,18 +3,56 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
 }
 
+/* SIDEBAR — CỐ ĐỊNH */
 .chat-room .sidebar {
-  flex: 6;
-  max-width: 25%;
-  border-right: 0.1rem solid #ddd;
+  width: 320px;
+  flex-shrink: 0;
+  border-right: 0.1rem solid #3a3b3c;
+  z-index: 2;
 }
 
+/* MAIN CHAT */
 .chat-room .main-chat {
-  flex: 18;
-  max-width: 75%;
-  background-color: #000;
+  flex: 1; /* Tự co giãn */
+  max-width: calc(100% - 320px);
   display: flex;
   flex-direction: column;
+  background-color: #000;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* INFO USER — Ban đầu ẩn đi */
+.info-user {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 3;
+}
+/* Khi InfoUser được render (hiện panel) */
+.chat-room .info-user:has(.visible) {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Khi React render InfoUser (hiện panel) */
+.chat-room .info-user:has(.info-user-container) {
+  width: 220px;
+  flex: 0 0 220px;
+  transform: translateX(0);
+}
+
+/* Khi InfoUser mở => MainChat thu lại */
+.chat-room:has(.info-user .info-user-container) .main-chat {
+  max-width: calc(100% - 540px);
+  flex: 1;
 }

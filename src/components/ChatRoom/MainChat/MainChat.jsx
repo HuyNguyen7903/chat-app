@@ -1,5 +1,4 @@
 import React from "react";
-import "./MainChat.css";
 import {
   FaPhone,
   FaInfoCircle,
@@ -10,8 +9,9 @@ import {
   FaPaperPlane,
   FaFileImage,
 } from "react-icons/fa";
+import "./MainChat.css";
 
-export default function MainChat({ chat, theme }) {
+export default function MainChat({ chat, theme, onToggleInfo }) {
   if (!chat)
     return <div className={`main-chat ${theme}`}>Chưa chọn đoạn chat</div>;
 
@@ -34,7 +34,7 @@ export default function MainChat({ chat, theme }) {
           <button className="chat-btn">
             <FaVideo />
           </button>
-          <button className="chat-btn">
+          <button className="chat-btn" onClick={onToggleInfo}>
             <FaInfoCircle />
           </button>
         </div>

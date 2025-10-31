@@ -5,8 +5,8 @@ import AuthForm from "./components/AuthForm/AuthForm";
 function App() {
   return (
     <>
-      {/* <ChatRoom /> */}
-      <AuthForm />
+      <ChatRoom />
+      {/* <AuthForm /> */}
     </>
   );
 }
