@@ -1,14 +1,13 @@
-/* CẤU TRÚC CHUNG */
+/* ========== CẤU TRÚC CHUNG ========== */
 .main-chat {
   display: flex;
   flex-direction: column;
   height: 100vh;
   padding: 1rem;
-
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* HEADER */
+/* ========== HEADER ========== */
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -58,17 +57,17 @@
   transform: scale(1.1);
 }
 
-/* BODY */
+/* ========== BODY ========== */
 .chat-body {
   flex: 1;
   padding: 1.6rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-/* MESSAGE */
+/* ========== MESSAGE ========== */
 .message {
   display: flex;
   align-items: flex-end;
@@ -93,7 +92,16 @@
   object-fit: cover;
 }
 
+.msg-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .msg-text {
+  position: relative;
+  white-space: pre-wrap;
   padding: 0.8rem 1.4rem;
   border-radius: 2rem;
   font-size: 1.4rem;
@@ -103,14 +111,116 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.message-time {
-  text-align: center;
-  font-size: 1.2rem;
-  opacity: 0.7;
-  margin: 1rem 0;
+/* ========== THỜI GIAN TIN NHẮN (POPUP) ========== */
+.msg-time-popup {
+  position: absolute;
+  bottom: -1.6rem;
+  right: 0;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
-/* INPUT */
+.message:hover .msg-time-popup {
+  opacity: 1;
+}
+
+/* Màu popup mỗi bên */
+.main-chat.light .message.right .msg-time-popup,
+.main-chat.light .message.left .msg-time-popup {
+  color: black;
+}
+
+.main-chat.dark .message.right .msg-time-popup,
+.main-chat.dark .message.left .msg-time-popup {
+  color: white;
+}
+
+/* ========== MENU 3 CHẤM & XÓA ========== */
+.msg-options {
+  opacity: 0;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #999;
+  margin-left: 0.3rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.message:hover .msg-options {
+  opacity: 1;
+}
+
+.msg-options:hover {
+  transform: scale(1.1);
+  color: #555;
+}
+
+.msg-menu {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-radius: 0.6rem;
+  font-size: 1.2rem;
+  padding: 0.4rem 0;
+  z-index: 20;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Vị trí menu tuỳ theo người gửi */
+.message.left .msg-menu {
+  left: 105%;
+}
+
+.message.right .msg-menu {
+  right: 105%;
+}
+
+.msg-menu button {
+  background: none;
+  border: none;
+  color: inherit;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+.msg-menu button:hover {
+  transform: scale(1.1);
+}
+
+/* Căn vị trí icon & menu theo hướng */
+.message.left .msg-wrapper {
+  flex-direction: row;
+}
+
+.message.left .msg-options {
+  order: 2;
+}
+
+.message.right .msg-wrapper {
+  flex-direction: row-reverse;
+}
+
+.message.right .msg-options {
+  order: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== INPUT ========== */
 .chat-input {
   display: flex;
   align-items: center;
@@ -159,7 +269,7 @@
   transform: scale(1.1);
 }
 
-/* DARK THEME */
+/* ========== THEME DARK ========== */
 .main-chat.dark {
   background-color: #18191a;
   color: #e4e6eb;
@@ -224,8 +334,7 @@
   color: #1b9cff;
 }
 
-/* LIGHT THEME */
-
+/* ========== THEME LIGHT ========== */
 .main-chat.light .chat-header {
   background-color: #f0f2f5;
   border-bottom: 1px solid #dddfe2;
@@ -285,7 +394,7 @@
   color: #1877f2;
 }
 
-/* RESPONSIVE */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .chat-user-info h3 {
     font-size: 1.4rem;
