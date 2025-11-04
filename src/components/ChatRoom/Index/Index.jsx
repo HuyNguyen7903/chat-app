@@ -1,98 +1,100 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import MainChat from "../MainChat/MainChat";
 import InfoUser from "../InfoUser/InfoUser";
+import "../../themes/theme-dark.css";
+import "../../themes/theme-light.css";
 import "./Index.css";
-import { getChats, getMessages } from "../../Services/api";
+import { getChats, getMessages } from "../../../services/api";
 import axios from "axios";
 
-export default function ChatRoom() {
-  const [theme, setTheme] = useState("dark");
-  const [showInfo, setShowInfo] = useState(false);
-  const [chats, setChats] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null);
-  const [filter, setFilter] = useState("all");
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setChats,
+  setSelectedChat,
+  updateChatUnread,
+  setFilter,
+} from "../../../redux/chatSlice";
+import { setTheme } from "../../../redux/themeSlice";
 
-  // 🔹 Lấy danh sách chat từ MockAPI và load chat đầu tiên
+export default function ChatRoom() {
+  const dispatch = useDispatch();
+
+  // Lấy state từ Redux store
+  const chats = useSelector((state) => state.chat.chats);
+  const selectedChat = useSelector((state) => state.chat.selectedChat);
+  const theme = useSelector((state) => state.theme.mode);
+  const filter = useSelector((state) => state.chat.filter);
+
+  // local state riêng (không đưa vào Redux)
+  const [showInfo, setShowInfo] = useState(false);
+
+  // Lấy danh sách chat từ MockAPI
   useEffect(() => {
     async function fetchChats() {
       try {
         const res = await getChats();
         const chatList = res.data;
-        setChats(chatList);
+        dispatch(setChats(chatList));
 
-        // 🔹 Nếu có danh sách chat và chưa có chat nào được chọn
         if (chatList.length > 0 && !selectedChat) {
           let firstChat = chatList[0];
 
-          // 🔸 Nếu chat đầu tiên chưa đọc -> cập nhật thành đã đọc
+          // Nếu chat đầu tiên chưa đọc -> cập nhật
           if (firstChat.unread) {
             try {
               await axios.put(
                 `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${firstChat.id}`,
                 { unread: false }
               );
-
-              // Cập nhật local state để UI thay đổi ngay
-              firstChat = { ...firstChat, unread: false };
-              setChats((prevChats) =>
-                prevChats.map((c) =>
-                  c.id === firstChat.id ? { ...c, unread: false } : c
-                )
+              dispatch(
+                updateChatUnread({ chatId: firstChat.id, unread: false })
               );
-            } catch (updateErr) {
-              console.error("Không thể cập nhật trạng thái đọc:", updateErr);
+              firstChat = { ...firstChat, unread: false };
+            } catch (err) {
+              console.error("Lỗi cập nhật unread:", err);
             }
           }
 
-          // 🔹 Lấy danh sách tin nhắn cho chat đầu tiên
+          // Lấy tin nhắn chat đầu tiên
           const resMsg = await getMessages(firstChat.id);
           const messages = resMsg.data || [];
-          setSelectedChat({ ...firstChat, messages });
+          dispatch(setSelectedChat({ ...firstChat, messages }));
         }
       } catch (err) {
-        console.error("Lỗi khi lấy danh sách chat:", err);
+        console.error("Lỗi lấy danh sách chat:", err);
       }
     }
 
     fetchChats();
-  }, []);
+  }, [dispatch, selectedChat]);
 
-  // 🔹 Chọn 1 chat → load messages
+  // Khi chọn 1 chat
   const handleSelectChat = async (chat) => {
     try {
-      // Nếu chat chưa đọc -> cập nhật thành đã đọc
       if (chat.unread) {
         try {
           await axios.put(
             `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${chat.id}`,
             { unread: false }
           );
-
-          // Cập nhật local state để UI thay đổi ngay
-          setChats((prevChats) =>
-            prevChats.map((c) =>
-              c.id === chat.id ? { ...c, unread: false } : c
-            )
-          );
+          dispatch(updateChatUnread({ chatId: chat.id, unread: false }));
         } catch (updateErr) {
           console.error("Không thể cập nhật trạng thái đọc:", updateErr);
         }
       }
 
-      // 🔹 Lấy tin nhắn của chat
       const res = await getMessages(chat.id);
       const messages = res.data || [];
-
-      const updatedChat = { ...chat, messages, unread: false };
-      setSelectedChat(updatedChat);
+      dispatch(setSelectedChat({ ...chat, messages, unread: false }));
       setShowInfo(false);
     } catch (err) {
       console.error("Lỗi khi lấy tin nhắn:", err);
     }
   };
 
-  // 🔹 Lọc danh sách chat theo filter
+  // Lọc danh sách chat theo filter
   const filteredChats = chats.filter((chat) => {
     if (filter === "unread") return chat.unread;
     if (filter === "group") return chat.type === "group";
@@ -106,9 +108,9 @@ export default function ChatRoom() {
         onSelectChat={handleSelectChat}
         selectedChat={selectedChat}
         theme={theme}
-        setTheme={setTheme}
+        setTheme={(mode) => dispatch(setTheme(mode))}
         filter={filter}
-        setFilter={setFilter}
+        setFilter={(f) => dispatch(setFilter(f))}
       />
 
       <MainChat

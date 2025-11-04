@@ -11,13 +11,16 @@ import {
   FaEllipsisV,
 } from "react-icons/fa";
 import "./MainChat.css";
-import { sendMessage, deleteMessage } from "../../Services/api";
+import { sendMessage, deleteMessage } from "../../../services/api";
+import { useDispatch } from "react-redux";
+import { setSelectedChat } from "../../../redux/chatSlice";
 
 export default function MainChat({ chat, theme, onToggleInfo }) {
   const [newMsg, setNewMsg] = useState("");
   const [showMenuId, setShowMenuId] = useState(null);
+  const dispatch = useDispatch();
 
-  if (!chat) return null;
+  if (!chat) return <div className={`main-chat ${theme}`}></div>;
 
   const formatTime = (timestamp) => {
     if (!timestamp) return "";
@@ -31,34 +34,46 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
     return `${day}/${month}, ${time}`;
   };
 
-  // Gửi tin nhắn
   const handleSend = async () => {
-    if (!newMsg.trim()) return;
+    const messageText = newMsg.trim();
+    if (!messageText) return;
 
     const now = Math.floor(Date.now() / 1000);
     const newMessage = {
       chatId: chat.id,
       from: "me",
-      text: newMsg,
+      text: messageText,
       createdAt: now,
     };
 
+    const updatedChat = { ...chat, messages: [...chat.messages, newMessage] };
+    dispatch(setSelectedChat(updatedChat));
+    setNewMsg("");
+
     try {
       const res = await sendMessage(newMessage);
-      chat.messages.push({ ...newMessage, id: res.data.id });
-      setNewMsg("");
+      if (res?.data?.id) {
+        const chatWithId = {
+          ...updatedChat,
+          messages: updatedChat.messages.map((m) =>
+            m === newMessage ? { ...m, id: res.data.id } : m
+          ),
+        };
+        dispatch(setSelectedChat(chatWithId));
+      }
     } catch (err) {
       console.error("Gửi tin nhắn thất bại:", err);
     }
   };
 
-  // Xóa tin nhắn
   const handleDelete = async (msgId) => {
-    const confirmDelete = window.confirm("Bạn có chắc muốn xóa tin nhắn này?");
-    if (!confirmDelete) return;
+    if (!window.confirm("Bạn có chắc muốn xóa tin nhắn này?")) return;
 
-    const updated = chat.messages.filter((m) => m.id !== msgId);
-    chat.messages = updated;
+    const updatedChat = {
+      ...chat,
+      messages: chat.messages.filter((m) => m.id !== msgId),
+    };
+    dispatch(setSelectedChat(updatedChat));
     setShowMenuId(null);
 
     try {
@@ -98,7 +113,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
       <div className="chat-body">
         {chat.messages?.map((msg) => (
           <div
-            key={msg.id}
+            key={msg.id || msg.createdAt}
             className={`message ${msg.from === "me" ? "right" : "left"}`}
           >
             {msg.from !== "me" && (
@@ -107,11 +122,8 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
 
             <div className="msg-wrapper">
               <div className="msg-text">{msg.text}</div>
-
-              {/* Thời gian hiển thị khi hover */}
               <div className="msg-time-popup">{formatTime(msg.createdAt)}</div>
 
-              {/* Nút 3 chấm */}
               <div
                 className="msg-options"
                 onClick={() =>
@@ -121,7 +133,6 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
                 <FaEllipsisV />
               </div>
 
-              {/* Menu xóa */}
               {showMenuId === msg.id && (
                 <div className="msg-menu">
                   <button onClick={() => handleDelete(msg.id)}>Xóa</button>

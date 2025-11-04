@@ -22,17 +22,14 @@ export default function Sidebar({
   const [showInfo, setShowInfo] = useState(false);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  const toggleInfo = () => {
-    setShowInfo(!showInfo);
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
   };
 
   return (
     <div className={`sidebar-container ${theme}`}>
-      {/* SIDEBAR CHÍNH */}
       <div className="sidebar">
+        {/* HEADER */}
         <div className="sidebar-header">
           <h2>Đoạn chat</h2>
           <div className="header-icons">
@@ -42,7 +39,7 @@ export default function Sidebar({
             <button className="icon-btn">
               <FaPen />
             </button>
-            <button className="icon-btn" onClick={toggleInfo}>
+            <button className="icon-btn" onClick={() => setShowInfo(true)}>
               <FaUser />
             </button>
             <button className="icon-btn">
@@ -51,13 +48,13 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* Ô tìm kiếm */}
+        {/* SEARCH BAR */}
         <div className="sidebar-search">
           <FaSearch className="search-icon" />
           <input type="text" placeholder="Tìm kiếm" />
         </div>
 
-        {/* Bộ lọc chat */}
+        {/* FILTER BUTTONS */}
         <div className="filter-tabs">
           <button
             className={filter === "all" ? "active" : ""}
@@ -79,7 +76,7 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* Danh sách đoạn chat */}
+        {/* CHAT LIST */}
         <ul className="chat-list">
           {chats.map((chat) => (
             <li
@@ -100,16 +97,16 @@ export default function Sidebar({
         </ul>
       </div>
 
-      {/* PANEL INFOUSER */}
-      <div className={`info-user-container ${showInfo ? "visible" : ""}`}>
-        {showInfo && (
+      {/* INFO USER */}
+      {showInfo && (
+        <div className="info-user-overlay">
           <InfoUser
             theme={theme}
-            setTheme={setTheme}
+            chat={selectedChat}
             onClose={() => setShowInfo(false)}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

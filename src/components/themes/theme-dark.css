@@ -1,0 +1,146 @@
+/* ====== Tổng thể ChatRoom ====== */
+
+.chat-room.dark .main-chat {
+  background-color: #18191a;
+  color: #f5f6f7;
+}
+
+.chat-room.dark .info-user-container {
+  background-color: #18191a;
+  color: #f5f6f7;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar-container.dark {
+  background-color: #18191a;
+  color: #e4e6eb;
+}
+
+.sidebar-container.dark .sidebar {
+  background-color: #242526;
+}
+
+.sidebar-container.dark .sidebar-search input {
+  background-color: #3a3b3c;
+  color: #e4e6eb;
+}
+
+.sidebar-container.dark .sidebar-search input::placeholder {
+  color: #b0b3b8;
+}
+
+.sidebar-container.dark .chat-item.active {
+  background-color: #3a3b3c;
+  border-left: 0.4rem solid #2e89ff;
+}
+
+.sidebar-container.dark .chat-item.active .chat-name {
+  color: #2e89ff;
+  font-weight: 700;
+}
+
+.sidebar-container.dark .chat-name {
+  color: #e4e6eb;
+}
+
+.sidebar-container.dark .chat-message,
+.sidebar-container.dark .chat-time {
+  color: #b0b3b8;
+}
+
+/* ====== MAIN CHAT ====== */
+.main-chat.dark {
+  background-color: #18191a;
+  color: #e4e6eb;
+}
+
+.main-chat.dark .chat-header {
+  background-color: #242526;
+  border-bottom: 1px solid #3a3b3c;
+}
+
+.main-chat.dark .chat-user-info h3 {
+  color: #e4e6eb;
+}
+
+.main-chat.dark .chat-user-info p {
+  color: #b0b3b8;
+}
+
+.main-chat.dark .chat-body {
+  background-color: #242526;
+}
+
+.main-chat.dark .message.left .msg-text {
+  background-color: #3a3b3c;
+  color: #e4e6eb;
+}
+
+.main-chat.dark .message.right .msg-text {
+  background-color: #0084ff;
+  color: #ffffff;
+}
+
+.main-chat.dark .chat-input {
+  background-color: #242526;
+  border-top: 1px solid #3a3b3c;
+}
+
+.main-chat.dark .chat-input input {
+  background-color: #3a3b3c;
+  color: #e4e6eb;
+}
+
+.main-chat.dark .chat-input input::placeholder {
+  color: #b0b3b8;
+}
+
+.main-chat.dark .chat-btn,
+.main-chat.dark .chat-tools button {
+  color: #b0b3b8;
+}
+
+.main-chat.dark .chat-btn:hover,
+.main-chat.dark .chat-tools button:hover {
+  color: #ffffff;
+}
+
+.main-chat.dark .send-btn {
+  color: #0084ff;
+}
+
+.main-chat.dark .send-btn:hover {
+  color: #1b9cff;
+}
+
+/* ====== INFO USER ====== */
+.info-user-panel.dark {
+  background-color: #242526;
+  color: #e4e6eb;
+}
+
+.info-user-panel.dark .info-header {
+  border-bottom: 1px solid #3a3b3c;
+}
+
+.info-user-panel.dark .info-section {
+  border-bottom: 1px solid #3a3b3c;
+}
+
+.info-user-panel.dark .info-section-header {
+  color: #e4e6eb;
+}
+
+.info-user-panel.dark .info-content {
+  background-color: #2f3031;
+  color: #b0b3b8;
+}
+
+.info-user-panel.dark .icon {
+  color: #b0b3b8;
+}
+
+.info-user-panel.dark .icon:hover {
+  color: #ffffff;
+  background-color: #3a3b3c;
+}

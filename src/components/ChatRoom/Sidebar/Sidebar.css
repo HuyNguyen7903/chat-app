@@ -63,7 +63,7 @@
   outline: none;
   color: #e4e6eb;
   background-color: #3a3b3c;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .sidebar-search input::placeholder {
@@ -114,7 +114,7 @@
   align-items: center;
   padding: 0.8rem 1.2rem;
   cursor: pointer;
-  transition: background-color 0.25s ease, border-left 0.25s ease;
+  transition: background-color 0.2s ease, border-left 0.2s ease;
 }
 
 .chat-item:hover {
@@ -169,130 +169,4 @@
 .icon-btn:hover {
   color: #ffffff;
   transform: scale(1.1);
-}
-
-/*  DARK THEME */
-.chat-room.dark {
-  background-color: #18191a;
-  color: #e4e6eb;
-}
-
-.chat-room.dark .sidebar {
-  background-color: #242526;
-}
-
-.chat-room.dark .main-chat {
-  background-color: #18191a;
-  color: #f5f6f7;
-}
-
-.chat-room.dark .info-user-container {
-  background-color: #18191a;
-  color: #f5f6f7;
-}
-
-.chat-room.dark .sidebar-search input {
-  background-color: #3a3b3c;
-  color: #e4e6eb;
-}
-
-.chat-room.dark .sidebar-search input::placeholder {
-  color: #b0b3b8;
-}
-
-.chat-room.dark .chat-item.active {
-  background-color: #3a3b3c;
-  border-left: 0.4rem solid #2e89ff;
-}
-
-.chat-room.dark .chat-item.active .chat-name {
-  color: #2e89ff;
-  font-weight: 700;
-}
-
-.chat-room.dark .chat-name {
-  color: #e4e6eb;
-}
-
-.chat-room.dark .chat-message {
-  color: #b0b3b8;
-}
-
-.chat-room.dark .chat-time {
-  color: #b0b3b8;
-}
-
-/* LIGHT THEME */
-.chat-room.light {
-  background-color: #f0f2f5;
-}
-
-.chat-room.light .sidebar {
-  background-color: #ffffff;
-  color: #050505;
-}
-
-.chat-room.light .main-chat {
-  background-color: #ffffff;
-  color: #1c1e21;
-}
-
-.chat-room.light .info-user-container {
-  background-color: #ffffff;
-  color: #1c1e21;
-}
-
-.chat-room.light .sidebar-search input {
-  background-color: #e4e6eb;
-  color: #050505;
-}
-
-.chat-room.light .sidebar-search input::placeholder {
-  color: #606770;
-}
-
-.chat-room.light .sidebar-search input:focus {
-  background-color: #d8dadf;
-}
-
-.chat-room.light .search-icon {
-  color: #606770;
-}
-
-.chat-room.light .chat-item:hover {
-  background-color: #e4e6eb;
-}
-
-.chat-room.light .chat-item.active {
-  background-color: #dbe7ff;
-  border-left: 0.4rem solid #1b74e4;
-}
-
-.chat-room.light .chat-item.active .chat-name {
-  color: #1b74e4;
-  font-weight: 700;
-}
-
-.chat-room.light .chat-name {
-  color: #050505;
-}
-
-.chat-room.light .chat-message {
-  color: #606770;
-}
-
-.chat-room.light .chat-time {
-  color: #65676b;
-}
-
-.chat-room.light .icon-btn {
-  color: #606770;
-}
-
-.chat-room.light .icon-btn:hover {
-  color: #1b74e4;
-}
-
-* {
-  transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -1,0 +1,160 @@
+/* ====== Tổng thể ChatRoom ====== */
+
+.chat-room.light .main-chat {
+  background-color: #ffffff;
+  color: #1c1e21;
+}
+
+.chat-room.light .info-user-container {
+  background-color: #ffffff;
+  color: #1c1e21;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar-container.light {
+  background-color: #f0f2f5;
+}
+
+.sidebar-container.light .sidebar {
+  background-color: #ffffff;
+  color: #050505;
+}
+
+.sidebar-container.light .sidebar-search input {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.sidebar-container.light .sidebar-search input::placeholder {
+  color: #606770;
+}
+
+.sidebar-container.light .sidebar-search input:focus {
+  background-color: #d8dadf;
+}
+
+.sidebar-container.light .search-icon {
+  color: #606770;
+}
+
+.sidebar-container.light .chat-item:hover {
+  background-color: #e4e6eb;
+}
+
+.sidebar-container.light .chat-item.active {
+  background-color: #dbe7ff;
+  border-left: 0.4rem solid #1b74e4;
+}
+
+.sidebar-container.light .chat-item.active .chat-name {
+  color: #1b74e4;
+  font-weight: 700;
+}
+
+.sidebar-container.light .chat-name {
+  color: #050505;
+}
+
+.sidebar-container.light .chat-message {
+  color: #606770;
+}
+
+.sidebar-container.light .chat-time {
+  color: #65676b;
+}
+
+.sidebar-container.light .icon-btn {
+  color: #606770;
+}
+
+.sidebar-container.light .icon-btn:hover {
+  color: #1b74e4;
+}
+
+/* ====== MAIN CHAT ====== */
+.main-chat.light .chat-header {
+  background-color: #f0f2f5;
+  border-bottom: 1px solid #dddfe2;
+}
+
+.main-chat.light .chat-user-info h3 {
+  color: #050505;
+}
+
+.main-chat.light .chat-user-info p {
+  color: #65676b;
+}
+
+.main-chat.light .chat-body {
+  background-color: #f0f2f5;
+}
+
+.main-chat.light .message.left .msg-text {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.main-chat.light .message.right .msg-text {
+  background-color: #0084ff;
+  color: #ffffff;
+}
+
+.main-chat.light .chat-input {
+  background-color: #f0f2f5;
+  border-top: 1px solid #dddfe2;
+}
+
+.main-chat.light .chat-input input {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.main-chat.light .chat-input input::placeholder {
+  color: #65676b;
+}
+
+.main-chat.light .chat-btn,
+.main-chat.light .chat-tools button {
+  color: #606770;
+}
+
+.main-chat.light .chat-btn:hover,
+.main-chat.light .chat-tools button:hover {
+  color: #1b74e4;
+}
+
+.main-chat.light .send-btn {
+  color: #1b74e4;
+}
+
+.main-chat.light .send-btn:hover {
+  color: #1877f2;
+}
+
+/* ====== INFO USER ====== */
+.info-user-panel.light {
+  background-color: #f0f2f5;
+  color: #050505;
+}
+
+.info-user-panel.light .info-header {
+  border-bottom: 1px solid #dddfe2;
+}
+
+.info-user-panel.light .info-section {
+  border-bottom: 1px solid #dddfe2;
+}
+
+.info-user-panel.light .info-content {
+  background-color: #e4e6eb;
+  color: #65676b;
+}
+
+.info-user-panel.light .icon {
+  color: #606770;
+}
+
+.info-user-panel.light .icon:hover {
+  color: #1b74e4;
+  background-color: #e4e6eb;
+}
