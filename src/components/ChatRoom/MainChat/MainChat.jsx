@@ -18,6 +18,7 @@ import { setSelectedChat } from "../../../redux/chatSlice";
 export default function MainChat({ chat, theme, onToggleInfo }) {
   const [newMsg, setNewMsg] = useState("");
   const [showMenuId, setShowMenuId] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
   const dispatch = useDispatch();
 
   if (!chat) return <div className={`main-chat ${theme}`}></div>;
@@ -67,14 +68,13 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
   };
 
   const handleDelete = async (msgId) => {
-    if (!window.confirm("Bạn có chắc muốn xóa tin nhắn này?")) return;
-
     const updatedChat = {
       ...chat,
       messages: chat.messages.filter((m) => m.id !== msgId),
     };
     dispatch(setSelectedChat(updatedChat));
     setShowMenuId(null);
+    setConfirmDelete(null); // Ẩn modal
 
     try {
       await deleteMessage(msgId);
@@ -135,7 +135,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
 
               {showMenuId === msg.id && (
                 <div className="msg-menu">
-                  <button onClick={() => handleDelete(msg.id)}>Xóa</button>
+                  <button onClick={() => setConfirmDelete(msg.id)}>Xóa</button>
                 </div>
               )}
             </div>
@@ -172,6 +172,30 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
           <FaPaperPlane />
         </button>
       </div>
+
+      {/* MODAL XÁC NHẬN XÓA */}
+      {confirmDelete && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Xóa tin nhắn?</h3>
+            <p>Bạn có chắc chắn muốn xóa tin nhắn này không?</p>
+            <div className="modal-buttons">
+              <button
+                className="btn-cancel"
+                onClick={() => setConfirmDelete(null)}
+              >
+                Hủy
+              </button>
+              <button
+                className="btn-confirm"
+                onClick={() => handleDelete(confirmDelete)}
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -13,26 +13,23 @@ import axios from "axios";
 export default function InfoUser({ onClose, chat, theme = "dark" }) {
   const [openSection, setOpenSection] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
   const [chatDetail, setChatDetail] = useState(null);
 
   // Toggle mở/đóng từng section
   const toggleSection = (section) =>
     setOpenSection(openSection === section ? null : section);
 
-  // Animation khi panel xuất hiện
+  // Hiện panel ngay lập tức, không animation
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 10);
-    return () => clearTimeout(timer);
+    setIsVisible(true);
   }, []);
 
-  // Animation khi đóng panel
+  // Đóng panel ngay lập tức, không animation
   const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => onClose(), 150);
+    onClose();
   };
 
-  // Gọi MockAPI lấy thông tin chi tiết chat (nếu cần)
+  // Gọi MockAPI lấy thông tin chi tiết chat
   useEffect(() => {
     if (chat?.id) {
       axios
@@ -48,9 +45,7 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
   return (
     <div className="info-user">
       <div
-        className={`info-user-container ${theme} ${
-          isVisible ? "visible" : ""
-        } ${isClosing ? "closing" : ""}`}
+        className={`info-user-container ${theme} ${isVisible ? "visible" : ""}`}
       >
         <div className={`info-user-panel ${theme}`}>
           {/* HEADER */}

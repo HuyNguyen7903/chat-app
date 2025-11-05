@@ -4,7 +4,7 @@
   flex-direction: column;
   height: 100vh;
   padding: 1rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: none;
 }
 
 /* ========== HEADER ========== */
@@ -267,6 +267,89 @@
 
 .send-btn:hover {
   transform: scale(1.1);
+}
+/* ===== Modal xác nhận xóa ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: #222;
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.25s ease;
+}
+
+.modal h3 {
+  margin-bottom: 0.5rem;
+}
+
+.modal p {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons .btn-cancel,
+.modal-buttons .btn-confirm {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: #444;
+  color: #ddd;
+}
+
+.btn-cancel:hover {
+  background: #555;
+}
+
+.btn-confirm {
+  background: #e63946;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background: #c5303e;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* ========== RESPONSIVE ========== */

@@ -1,20 +1,10 @@
 .info-user-container {
   height: 100%;
   width: 100%;
-  opacity: 0;
-  transform: translateX(50px);
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  padding: 1rem 1rem 1rem 0;
-}
-
-.info-user-container.visible {
-  transform: translateX(0);
   opacity: 1;
-}
-
-.info-user-container.closing {
-  transform: translateX(50px);
-  opacity: 0;
+  transform: none;
+  transition: none;
+  padding: 1rem 1rem 1rem 0;
 }
 
 /* KHUNG CHÍNH */

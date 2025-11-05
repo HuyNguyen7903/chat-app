@@ -3,7 +3,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: none;
   position: relative;
 }
 
@@ -17,12 +17,12 @@
 
 /* MAIN CHAT */
 .chat-room .main-chat {
-  flex: 1; /* Tự co giãn */
+  flex: 1;
   max-width: calc(100% - 320px);
   display: flex;
   flex-direction: column;
   background-color: #000;
-  transition: all 0.2s ease;
+  transition: none;
   position: relative;
   z-index: 1;
 }
@@ -33,9 +33,9 @@
   top: 0;
   right: 0;
   height: 100%;
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 1;
+  transform: none;
+  transition: none;
   z-index: 3;
 }
 /* Khi InfoUser được render (hiện panel) */

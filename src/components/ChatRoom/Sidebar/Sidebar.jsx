@@ -20,11 +20,21 @@ export default function Sidebar({
   setFilter,
 }) {
   const [showInfo, setShowInfo] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // 🔍 Thêm state tìm kiếm
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
   };
+
+  // 🔍 Lọc danh sách chat theo từ khóa tìm kiếm
+  const filteredChats = chats.filter((chat) => {
+    const lowerTerm = searchTerm.toLowerCase();
+    return (
+      chat.name.toLowerCase().includes(lowerTerm) ||
+      chat.message.toLowerCase().includes(lowerTerm)
+    );
+  });
 
   return (
     <div className={`sidebar-container ${theme}`}>
@@ -51,7 +61,12 @@ export default function Sidebar({
         {/* SEARCH BAR */}
         <div className="sidebar-search">
           <FaSearch className="search-icon" />
-          <input type="text" placeholder="Tìm kiếm" />
+          <input
+            type="text"
+            placeholder="Tìm kiếm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // 🟢 Cập nhật theo input
+          />
         </div>
 
         {/* FILTER BUTTONS */}
@@ -78,22 +93,26 @@ export default function Sidebar({
 
         {/* CHAT LIST */}
         <ul className="chat-list">
-          {chats.map((chat) => (
-            <li
-              key={chat.id}
-              className={`chat-item 
-                ${chat.unread ? "unread" : ""} 
-                ${selectedChat?.id === chat.id ? "active" : ""}`}
-              onClick={() => onSelectChat(chat)}
-            >
-              <img src={chat.avatar} alt={chat.name} className="avatar" />
-              <div className="chat-info">
-                <div className="chat-name">{chat.name}</div>
-                <div className="chat-message">{chat.message}</div>
-              </div>
-              <span className="chat-time">{chat.time}</span>
-            </li>
-          ))}
+          {filteredChats.length > 0 ? (
+            filteredChats.map((chat) => (
+              <li
+                key={chat.id}
+                className={`chat-item 
+                  ${chat.unread ? "unread" : ""} 
+                  ${selectedChat?.id === chat.id ? "active" : ""}`}
+                onClick={() => onSelectChat(chat)}
+              >
+                <img src={chat.avatar} alt={chat.name} className="avatar" />
+                <div className="chat-info">
+                  <div className="chat-name">{chat.name}</div>
+                  <div className="chat-message">{chat.message}</div>
+                </div>
+                <span className="chat-time">{chat.time}</span>
+              </li>
+            ))
+          ) : (
+            <li className="no-chat">Không tìm thấy đoạn chat nào</li> // 🟢 Thông báo nếu không có kết quả
+          )}
         </ul>
       </div>
 
