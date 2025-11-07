@@ -1,10 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AuthForm.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginUser, signupUser } from "../../redux/authSlice";
 import { FaGoogle, FaFacebookF, FaApple, FaPhoneAlt } from "react-icons/fa";
-import logo from "../Assets/bglogin.jpg"; // đặt ảnh bạn vừa tải lên ở đây
+import logo from "../Assets/bglogin.jpg";
 
 export default function AuthForm() {
   const [isActive, setIsActive] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+
+  // Nếu có token thì vào trang /chat
+  useEffect(() => {
+    if (token) {
+      navigate("/chat");
+    }
+  }, [token, navigate]);
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.password) {
+      alert("Please fill in all fields!");
+      return;
+    }
+    dispatch(signupUser(form));
+    alert("Account created! Please log in.");
+    setIsActive(false);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!form.email || !form.password) {
+      alert("Please enter email and password!");
+      return;
+    }
+
+    dispatch(loginUser({ email: form.email, password: form.password }))
+      .unwrap()
+      .then(() => {
+        navigate("/chat");
+      })
+      .catch(() => {
+        alert("Invalid email or password!");
+      });
+  };
 
   return (
     <div className="auth-wrapper">
@@ -18,7 +60,7 @@ export default function AuthForm() {
       <div className={`container ${isActive ? "active" : ""}`} id="container">
         {/* --- Sign Up Form --- */}
         <div className="form-container sign-up">
-          <form>
+          <form onSubmit={handleSignup}>
             <h1>Create Account</h1>
             <div className="social-icons">
               <a href="#" className="icon google">
@@ -35,20 +77,37 @@ export default function AuthForm() {
               </a>
             </div>
             <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button type="button">Sign Up</button>
+            <input
+              type="text"
+              placeholder="Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
+            <button type="submit">Sign Up</button>
             <div className="mobile-switch">
               <p>Already have an account?</p>
-              <button onClick={() => setIsActive(false)}>Sign In</button>
+              <button type="button" onClick={() => setIsActive(false)}>
+                Sign In
+              </button>
             </div>
           </form>
         </div>
 
         {/* --- Sign In Form --- */}
         <div className="form-container sign-in">
-          <form>
+          <form onSubmit={handleLogin}>
             <h1>Sign In</h1>
             <div className="social-icons">
               <a href="#" className="icon google">
@@ -65,13 +124,25 @@ export default function AuthForm() {
               </a>
             </div>
             <span>or use your email password</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
             <a href="#">Forgot Your Password?</a>
-            <button type="button">Sign In</button>
+            <button type="submit">Sign In</button>
             <div className="mobile-switch">
               <p>Don’t have an account?</p>
-              <button onClick={() => setIsActive(true)}>Sign Up</button>
+              <button type="button" onClick={() => setIsActive(true)}>
+                Sign Up
+              </button>
             </div>
           </form>
         </div>

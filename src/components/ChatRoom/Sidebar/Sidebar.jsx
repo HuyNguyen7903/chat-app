@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import { FaEllipsisH, FaSearch, FaSun, FaMoon } from "react-icons/fa";
 import InfoUser from "../InfoUser/InfoUser";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({
   chats,
@@ -14,15 +17,24 @@ export default function Sidebar({
 }) {
   const [showInfo, setShowInfo] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
   };
 
-  // ✅ Hàm format thời gian thành "x giờ trước", "x ngày trước", ...
+  const toggleOptions = () => setShowOptions(!showOptions);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   const timeAgo = (timestamp) => {
-    // Nếu là giây thì nhân 1000
     const time =
       timestamp.toString().length === 10 ? timestamp * 1000 : timestamp;
     const diff = Date.now() - new Date(time).getTime();
@@ -40,7 +52,6 @@ export default function Sidebar({
     return `${weeks} tuần trước`;
   };
 
-  // 🔍 Lọc danh sách chat theo từ khóa tìm kiếm
   const filteredChats = chats.filter((chat) => {
     const lowerTerm = searchTerm.toLowerCase();
     return (
@@ -60,13 +71,24 @@ export default function Sidebar({
               {theme === "dark" ? <FaSun /> : <FaMoon />}
             </button>
 
-            <button className="icon-btn">
-              <FaEllipsisH />
-            </button>
+            <div className="menu-wrapper">
+              <button className="icon-btn" onClick={toggleOptions}>
+                <FaEllipsisH />
+              </button>
+
+              {showOptions && (
+                <div className="dropdown-menu">
+                  <button onClick={() => alert("New Chat")}>New Chat</button>
+                  <button onClick={() => alert("New Group")}>New Group</button>
+                  <button onClick={() => alert("Settings")}>Settings</button>
+                  <button onClick={handleLogout}>Logout</button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* SEARCH BAR */}
+        {/* SEARCH */}
         <div className="sidebar-search">
           <FaSearch className="search-icon" />
           <input
@@ -77,7 +99,7 @@ export default function Sidebar({
           />
         </div>
 
-        {/* FILTER BUTTONS */}
+        {/* FILTER */}
         <div className="filter-tabs">
           <button
             className={filter === "all" ? "active" : ""}
@@ -115,7 +137,6 @@ export default function Sidebar({
                   <div className="chat-name">{chat.name}</div>
                   <div className="chat-message">{chat.message}</div>
                 </div>
-                {/* ✅ Hiển thị thời gian tương đối */}
                 <span className="chat-time">
                   {chat.lastMessageTime
                     ? timeAgo(chat.lastMessageTime)

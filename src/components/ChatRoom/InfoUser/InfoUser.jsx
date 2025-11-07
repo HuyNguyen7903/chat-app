@@ -19,7 +19,6 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
   const toggleSection = (section) =>
     setOpenSection(openSection === section ? null : section);
 
-  // Hiện panel ngay lập tức, không animation
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -28,7 +27,7 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     onClose();
   };
 
-  // ✅ Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
+  // Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
   const timeAgo = (timestamp) => {
     if (!timestamp) return "";
     const time =
@@ -58,12 +57,12 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     }
   }, [chat]);
 
-  // ✅ Dữ liệu hiển thị (ưu tiên API, nhưng giữ lại messages từ chat)
+  // Dữ liệu hiển thị (ưu tiên API, nhưng giữ lại messages từ chat)
   const display = chatDetail
     ? { ...chatDetail, messages: chat?.messages || [] }
     : chat;
 
-  // ✅ Tính thời gian hoạt động cuối cùng (giống MainChat)
+  // Tính thời gian hoạt động cuối cùng (giống MainChat)
   const lastActive = (() => {
     if (display?.messages && display.messages.length > 0) {
       const otherMsgs = display.messages.filter((m) => m.from !== "me");

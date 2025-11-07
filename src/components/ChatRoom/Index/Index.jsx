@@ -7,8 +7,6 @@ import "../../themes/theme-light.css";
 import "./Index.css";
 import { getChats, getMessages } from "../../../services/api";
 import axios from "axios";
-
-// Redux
 import { useSelector, useDispatch } from "react-redux";
 import {
   setChats,
@@ -37,13 +35,13 @@ export default function ChatRoom() {
         const res = await getChats();
         const chatList = res.data;
 
-        // 🔄 Lấy tất cả messages
+        // Lấy tất cả messages
         const resMessages = await axios.get(
           "https://6905d07aee3d0d14c133cc68.mockapi.io/messages"
         );
         const allMessages = resMessages.data;
 
-        // ✅ Ghép messages vào mỗi chat
+        // Ghép messages vào mỗi chat
         const mergedChats = chatList.map((chat) => {
           const chatMessages = allMessages.filter((msg) => {
             const msgChatId = msg.chatId.replace("chatId ", "");
@@ -67,12 +65,12 @@ export default function ChatRoom() {
         // Gửi dữ liệu vào Redux
         dispatch(setChats(mergedChats));
 
-        // ✅ Nếu chưa có selectedChat thì chọn đoạn đầu tiên
+        // Nếu chưa có selectedChat thì chọn đoạn đầu tiên
         if (mergedChats.length > 0 && !selectedChat) {
           const firstChat = mergedChats[0];
 
           try {
-            // 👉 Gọi API lấy messages riêng cho chắc chắn
+            // Gọi API lấy messages riêng cho chắc chắn
             const resMsgs = await getMessages(firstChat.id);
             let chatMessages = resMsgs.data || [];
 
@@ -81,7 +79,7 @@ export default function ChatRoom() {
               (a, b) => a.createdAt - b.createdAt
             );
 
-            // ✅ Nếu đoạn đầu tiên chưa đọc → cập nhật thành đã đọc
+            // Nếu đoạn đầu tiên chưa đọc → cập nhật thành đã đọc
             if (firstChat.unread) {
               await axios.put(
                 `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${firstChat.id}`,
@@ -92,7 +90,7 @@ export default function ChatRoom() {
               );
             }
 
-            // ✅ Gửi vào Redux: có cả messages, không bị trống
+            // Gửi vào Redux: có cả messages, không bị trống
             dispatch(setSelectedChat({ ...firstChat, messages: chatMessages }));
           } catch (err) {
             console.error("Không thể load tin nhắn đầu tiên:", err);
@@ -124,7 +122,7 @@ export default function ChatRoom() {
       const res = await getMessages(chat.id);
       let messages = res.data || [];
 
-      // ✅ Sắp xếp tin nhắn theo thời gian tăng dần
+      // Sắp xếp tin nhắn theo thời gian tăng dần
       messages = messages.sort((a, b) => a.createdAt - b.createdAt);
 
       dispatch(setSelectedChat({ ...chat, messages, unread: false }));

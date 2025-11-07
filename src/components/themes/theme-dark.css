@@ -47,6 +47,24 @@
 .sidebar-container.dark .chat-time {
   color: #b0b3b8;
 }
+.sidebar-container.dark .icon-btn:hover {
+  color: #1cf89c;
+}
+/* ====== MENU DROPDOWN ====== */
+.sidebar-container.dark .dropdown-menu {
+  background-color: #242526;
+  border: 1px solid #3a3b3c;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-container.dark .dropdown-menu button {
+  color: #e4e6eb;
+  background: none;
+}
+
+.sidebar-container.dark .dropdown-menu button:hover {
+  color: #1cf89c;
+}
 
 /* ====== MAIN CHAT ====== */
 .main-chat.dark {
@@ -102,7 +120,7 @@
 
 .main-chat.dark .chat-btn:hover,
 .main-chat.dark .chat-tools button:hover {
-  color: #ffffff;
+  color: #1cf89c;
 }
 
 .main-chat.dark .send-btn {

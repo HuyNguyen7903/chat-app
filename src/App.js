@@ -1,13 +1,23 @@
-import React, { useState } from "react";
-import ChatRoom from "./components/ChatRoom/Index/Index";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthForm from "./components/AuthForm/AuthForm";
+import ChatRoom from "./components/ChatRoom//Index/Index";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
-    <>
-      <ChatRoom />
-      {/* <AuthForm /> */}
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<AuthForm />} />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <ChatRoom />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

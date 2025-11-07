@@ -49,6 +49,38 @@
   opacity: 0.8;
   user-select: none;
 }
+
+/* MENU DROPDOWN */
+.menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 2.8rem;
+  right: 0;
+  background-color: #242526;
+  border: 1px solid #3a3b3c;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  color: #e4e6eb;
+  text-align: left;
+  padding: 0.8rem 1.2rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
 /* SEARCH BAR */
 .sidebar-search {
   padding: 0.8rem 1.2rem;

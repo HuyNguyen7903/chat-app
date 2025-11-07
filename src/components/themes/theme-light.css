@@ -70,6 +70,21 @@
 .sidebar-container.light .icon-btn:hover {
   color: #1cf89c;
 }
+/* ====== MENU DROPDOWN ====== */
+.sidebar-container.light .dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid #dddfe2;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-container.light .dropdown-menu button {
+  color: #050505;
+  background: none;
+}
+
+.sidebar-container.light .dropdown-menu button:hover {
+  color: #1f9161;
+}
 
 /* ====== MAIN CHAT ====== */
 .main-chat.light .chat-header {
@@ -147,7 +162,7 @@
 }
 
 .main-chat.light .chat-body::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #b1b1b3, #7b7c7e); /* Xanh lá khi hover */
+  background: linear-gradient(180deg, #b1b1b3, #7b7c7e);
 }
 
 /* ====== INFO USER ====== */

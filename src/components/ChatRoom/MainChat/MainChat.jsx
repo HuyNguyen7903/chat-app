@@ -22,7 +22,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
 
   if (!chat) return <div className={`main-chat ${theme}`}></div>;
 
-  // ✅ Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
+  // Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
   const timeAgo = (timestamp) => {
     if (!timestamp) return "";
     const time =
@@ -42,7 +42,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
     return `${weeks} tuần trước`;
   };
 
-  // ✅ Hàm format cho từng tin nhắn (giữ nguyên logic cũ)
+  // Hàm format cho từng tin nhắn (giữ nguyên logic cũ)
   const formatTime = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp * 1000);
@@ -67,7 +67,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
       createdAt: now,
     };
 
-    // ✅ Sắp xếp trước khi dispatch
+    // Sắp xếp trước khi dispatch
     const updatedMessages = [...chat.messages, newMessage].sort(
       (a, b) => a.createdAt - b.createdAt
     );
@@ -76,7 +76,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
     dispatch(setSelectedChat(updatedChat));
     setNewMsg("");
 
-    // ✅ Reset chiều cao ô nhập khi gửi tin nhắn
+    // Reset chiều cao ô nhập khi gửi tin nhắn
     const textarea = document.querySelector(".chat-input textarea");
     if (textarea) {
       textarea.style.height = "auto";
