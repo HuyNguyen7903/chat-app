@@ -78,10 +78,12 @@ export default function Sidebar({
 
               {showOptions && (
                 <div className="dropdown-menu">
-                  <button onClick={() => alert("New Chat")}>New Chat</button>
-                  <button onClick={() => alert("New Group")}>New Group</button>
-                  <button onClick={() => alert("Settings")}>Settings</button>
-                  <button onClick={handleLogout}>Logout</button>
+                  <button onClick={() => alert("New Chat")}>
+                    Đoạn chat mới
+                  </button>
+                  <button onClick={() => alert("New Group")}>Tạo nhóm</button>
+                  <button onClick={() => alert("Settings")}>Tùy chỉnh</button>
+                  <button onClick={handleLogout}>Đăng xuất</button>
                 </div>
               )}
             </div>
@@ -140,6 +142,8 @@ export default function Sidebar({
                 <span className="chat-time">
                   {chat.lastMessageTime
                     ? timeAgo(chat.lastMessageTime)
+                    : chat.time
+                    ? timeAgo(chat.time)
                     : "Chưa có tin nhắn"}
                 </span>
               </li>

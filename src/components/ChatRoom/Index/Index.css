@@ -11,7 +11,6 @@
 .chat-room .sidebar {
   width: 320px;
   flex-shrink: 0;
-  border-right: 0.1rem solid #3a3b3c;
   z-index: 2;
 }
 
