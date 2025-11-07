@@ -36,14 +36,53 @@ export default function ChatRoom() {
       try {
         const res = await getChats();
         const chatList = res.data;
-        dispatch(setChats(chatList));
 
-        if (chatList.length > 0 && !selectedChat) {
-          let firstChat = chatList[0];
+        // 🔄 Lấy tất cả messages
+        const resMessages = await axios.get(
+          "https://6905d07aee3d0d14c133cc68.mockapi.io/messages"
+        );
+        const allMessages = resMessages.data;
 
-          // Nếu chat đầu tiên chưa đọc -> cập nhật
-          if (firstChat.unread) {
-            try {
+        // ✅ Ghép messages vào mỗi chat
+        const mergedChats = chatList.map((chat) => {
+          const chatMessages = allMessages.filter((msg) => {
+            const msgChatId = msg.chatId.replace("chatId ", "");
+            return msgChatId === chat.id;
+          });
+
+          if (chatMessages.length > 0) {
+            const lastMsg = chatMessages.reduce((latest, msg) =>
+              msg.createdAt > latest.createdAt ? msg : latest
+            );
+            return {
+              ...chat,
+              message: lastMsg.text,
+              lastMessageTime: lastMsg.createdAt,
+            };
+          } else {
+            return { ...chat, lastMessageTime: null };
+          }
+        });
+
+        // Gửi dữ liệu vào Redux
+        dispatch(setChats(mergedChats));
+
+        // ✅ Nếu chưa có selectedChat thì chọn đoạn đầu tiên
+        if (mergedChats.length > 0 && !selectedChat) {
+          const firstChat = mergedChats[0];
+
+          try {
+            // 👉 Gọi API lấy messages riêng cho chắc chắn
+            const resMsgs = await getMessages(firstChat.id);
+            let chatMessages = resMsgs.data || [];
+
+            // Sắp xếp theo thời gian
+            chatMessages = chatMessages.sort(
+              (a, b) => a.createdAt - b.createdAt
+            );
+
+            // ✅ Nếu đoạn đầu tiên chưa đọc → cập nhật thành đã đọc
+            if (firstChat.unread) {
               await axios.put(
                 `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${firstChat.id}`,
                 { unread: false }
@@ -51,16 +90,13 @@ export default function ChatRoom() {
               dispatch(
                 updateChatUnread({ chatId: firstChat.id, unread: false })
               );
-              firstChat = { ...firstChat, unread: false };
-            } catch (err) {
-              console.error("Lỗi cập nhật unread:", err);
             }
-          }
 
-          // Lấy tin nhắn chat đầu tiên
-          const resMsg = await getMessages(firstChat.id);
-          const messages = resMsg.data || [];
-          dispatch(setSelectedChat({ ...firstChat, messages }));
+            // ✅ Gửi vào Redux: có cả messages, không bị trống
+            dispatch(setSelectedChat({ ...firstChat, messages: chatMessages }));
+          } catch (err) {
+            console.error("Không thể load tin nhắn đầu tiên:", err);
+          }
         }
       } catch (err) {
         console.error("Lỗi lấy danh sách chat:", err);
@@ -86,7 +122,11 @@ export default function ChatRoom() {
       }
 
       const res = await getMessages(chat.id);
-      const messages = res.data || [];
+      let messages = res.data || [];
+
+      // ✅ Sắp xếp tin nhắn theo thời gian tăng dần
+      messages = messages.sort((a, b) => a.createdAt - b.createdAt);
+
       dispatch(setSelectedChat({ ...chat, messages, unread: false }));
       setShowInfo(false);
     } catch (err) {

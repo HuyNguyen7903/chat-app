@@ -37,7 +37,18 @@
   color: #ffffff;
   transform: scale(1.1);
 }
-
+.no-chat {
+  text-align: center;
+  color: #b0b3b8;
+  font-size: 1.4rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  opacity: 0.8;
+  user-select: none;
+}
 /* SEARCH BAR */
 .sidebar-search {
   padding: 0.8rem 1.2rem;
@@ -122,7 +133,7 @@
 }
 
 .chat-item.unread {
-  background-color: #2e89ff20;
+  background-color: #00ff2620;
 }
 
 .avatar {

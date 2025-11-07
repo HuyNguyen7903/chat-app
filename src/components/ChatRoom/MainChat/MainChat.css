@@ -126,17 +126,6 @@
   opacity: 1;
 }
 
-/* Màu popup mỗi bên */
-.main-chat.light .message.right .msg-time-popup,
-.main-chat.light .message.left .msg-time-popup {
-  color: black;
-}
-
-.main-chat.dark .message.right .msg-time-popup,
-.main-chat.dark .message.left .msg-time-popup {
-  color: white;
-}
-
 /* ========== MENU 3 CHẤM & XÓA ========== */
 .msg-options {
   opacity: 0;
@@ -160,8 +149,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
+
   border-radius: 0.6rem;
   font-size: 1.2rem;
   padding: 0.4rem 0;
@@ -227,6 +215,21 @@
   padding: 0.8rem 1.2rem;
   border-top: 0.1rem solid #3a3b3c;
   border-radius: 0 0 2rem 2rem;
+  gap: 0.6rem;
+}
+.chat-input textarea {
+  flex: 1;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.4rem;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  max-height: 120px;
+  line-height: 1.4;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: pre-wrap;
 }
 
 .chat-tools {
@@ -252,7 +255,6 @@
   border-radius: 2rem;
   padding: 0.8rem 1.4rem;
   font-size: 1.4rem;
-  margin: 0 0.8rem;
   outline: none;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -266,6 +268,35 @@
 }
 
 .send-btn:hover {
+  transform: scale(1.1);
+}
+
+.emoji-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: inherit;
+}
+.emoji-btn:hover {
+  transform: scale(1.1);
+}
+
+.chat-tools-right {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.chat-tools-right button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: inherit;
+}
+.chat-tools-right button:hover {
   transform: scale(1.1);
 }
 /* ===== Modal xác nhận xóa ===== */
@@ -332,6 +363,34 @@
 
 .btn-confirm:hover {
   background: #c5303e;
+}
+
+/* ========== SCROLLBAR (Thanh trượt) ========== */
+
+.chat-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-body::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #888, #666);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.chat-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #aaa, #777);
+}
+
+/* Ẩn scrollbar trên mobile (tùy chọn) */
+@media (max-width: 768px) {
+  .chat-body::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @keyframes fadeIn {

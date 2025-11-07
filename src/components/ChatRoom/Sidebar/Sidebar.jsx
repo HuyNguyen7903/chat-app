@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import {
-  FaPen,
-  FaEllipsisH,
-  FaSearch,
-  FaSun,
-  FaMoon,
-  FaUser,
-} from "react-icons/fa";
+import { FaEllipsisH, FaSearch, FaSun, FaMoon } from "react-icons/fa";
 import InfoUser from "../InfoUser/InfoUser";
 
 export default function Sidebar({
@@ -20,11 +13,31 @@ export default function Sidebar({
   setFilter,
 }) {
   const [showInfo, setShowInfo] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // 🔍 Thêm state tìm kiếm
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
+  };
+
+  // ✅ Hàm format thời gian thành "x giờ trước", "x ngày trước", ...
+  const timeAgo = (timestamp) => {
+    // Nếu là giây thì nhân 1000
+    const time =
+      timestamp.toString().length === 10 ? timestamp * 1000 : timestamp;
+    const diff = Date.now() - new Date(time).getTime();
+
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (seconds < 60) return "Vừa xong";
+    if (minutes < 60) return `${minutes} phút trước`;
+    if (hours < 24) return `${hours} giờ trước`;
+    if (days < 7) return `${days} ngày trước`;
+    return `${weeks} tuần trước`;
   };
 
   // 🔍 Lọc danh sách chat theo từ khóa tìm kiếm
@@ -46,12 +59,7 @@ export default function Sidebar({
             <button className="icon-btn" onClick={toggleTheme}>
               {theme === "dark" ? <FaSun /> : <FaMoon />}
             </button>
-            <button className="icon-btn">
-              <FaPen />
-            </button>
-            <button className="icon-btn" onClick={() => setShowInfo(true)}>
-              <FaUser />
-            </button>
+
             <button className="icon-btn">
               <FaEllipsisH />
             </button>
@@ -65,7 +73,7 @@ export default function Sidebar({
             type="text"
             placeholder="Tìm kiếm"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // 🟢 Cập nhật theo input
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
@@ -107,11 +115,16 @@ export default function Sidebar({
                   <div className="chat-name">{chat.name}</div>
                   <div className="chat-message">{chat.message}</div>
                 </div>
-                <span className="chat-time">{chat.time}</span>
+                {/* ✅ Hiển thị thời gian tương đối */}
+                <span className="chat-time">
+                  {chat.lastMessageTime
+                    ? timeAgo(chat.lastMessageTime)
+                    : "Chưa có tin nhắn"}
+                </span>
               </li>
             ))
           ) : (
-            <li className="no-chat">Không tìm thấy đoạn chat nào</li> // 🟢 Thông báo nếu không có kết quả
+            <li className="no-chat">Không có đoạn chat nào chưa đọc</li>
           )}
         </ul>
       </div>

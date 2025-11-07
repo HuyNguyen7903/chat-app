@@ -3,7 +3,6 @@ import {
   FaPhone,
   FaInfoCircle,
   FaVideo,
-  FaMicrophone,
   FaRegSmile,
   FaPaperclip,
   FaPaperPlane,
@@ -23,6 +22,27 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
 
   if (!chat) return <div className={`main-chat ${theme}`}></div>;
 
+  // ✅ Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
+  const timeAgo = (timestamp) => {
+    if (!timestamp) return "";
+    const time =
+      timestamp.toString().length === 10 ? timestamp * 1000 : timestamp;
+    const diff = Date.now() - new Date(time).getTime();
+
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (seconds < 60) return "vừa xong";
+    if (minutes < 60) return `${minutes} phút trước`;
+    if (hours < 24) return `${hours} giờ trước`;
+    if (days < 7) return `${days} ngày trước`;
+    return `${weeks} tuần trước`;
+  };
+
+  // ✅ Hàm format cho từng tin nhắn (giữ nguyên logic cũ)
   const formatTime = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp * 1000);
@@ -47,16 +67,27 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
       createdAt: now,
     };
 
-    const updatedChat = { ...chat, messages: [...chat.messages, newMessage] };
+    // ✅ Sắp xếp trước khi dispatch
+    const updatedMessages = [...chat.messages, newMessage].sort(
+      (a, b) => a.createdAt - b.createdAt
+    );
+
+    const updatedChat = { ...chat, messages: updatedMessages };
     dispatch(setSelectedChat(updatedChat));
     setNewMsg("");
+
+    // ✅ Reset chiều cao ô nhập khi gửi tin nhắn
+    const textarea = document.querySelector(".chat-input textarea");
+    if (textarea) {
+      textarea.style.height = "auto";
+    }
 
     try {
       const res = await sendMessage(newMessage);
       if (res?.data?.id) {
         const chatWithId = {
           ...updatedChat,
-          messages: updatedChat.messages.map((m) =>
+          messages: updatedMessages.map((m) =>
             m === newMessage ? { ...m, id: res.data.id } : m
           ),
         };
@@ -74,7 +105,7 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
     };
     dispatch(setSelectedChat(updatedChat));
     setShowMenuId(null);
-    setConfirmDelete(null); // Ẩn modal
+    setConfirmDelete(null);
 
     try {
       await deleteMessage(msgId);
@@ -92,7 +123,19 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
           <img src={chat.avatar} alt={chat.name} className="chat-avatar" />
           <div>
             <h3>{chat.name}</h3>
-            <p>Hoạt động {chat.time} trước</p>
+            <p>
+              Hoạt động{" "}
+              {chat.messages && chat.messages.length > 0
+                ? (() => {
+                    const otherMsgs = chat.messages.filter(
+                      (m) => m.from !== "me"
+                    );
+                    if (otherMsgs.length === 0) return "chưa có hoạt động";
+                    const lastMsg = otherMsgs[otherMsgs.length - 1];
+                    return timeAgo(lastMsg.createdAt);
+                  })()
+                : "chưa có hoạt động"}
+            </p>
           </div>
         </div>
 
@@ -145,28 +188,35 @@ export default function MainChat({ chat, theme, onToggleInfo }) {
 
       {/* INPUT */}
       <div className="chat-input">
-        <div className="chat-tools">
-          <button>
-            <FaMicrophone />
-          </button>
+        <button className="emoji-btn">
+          <FaRegSmile />
+        </button>
+
+        <textarea
+          placeholder="Aa"
+          value={newMsg}
+          rows={1}
+          onChange={(e) => {
+            setNewMsg(e.target.value);
+            e.target.style.height = "auto";
+            e.target.style.height = e.target.scrollHeight + "px";
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+        />
+
+        <div className="chat-tools-right">
           <button>
             <FaPaperclip />
-          </button>
-          <button>
-            <FaRegSmile />
           </button>
           <button>
             <FaFileImage />
           </button>
         </div>
-
-        <input
-          type="text"
-          placeholder="Aa"
-          value={newMsg}
-          onChange={(e) => setNewMsg(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
 
         <button className="send-btn" onClick={handleSend}>
           <FaPaperPlane />

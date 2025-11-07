@@ -12,7 +12,7 @@
 
 /* ====== SIDEBAR ====== */
 .sidebar-container.light {
-  background-color: #f0f2f5;
+  background-color: #f6f6f7;
 }
 
 .sidebar-container.light .sidebar {
@@ -43,11 +43,11 @@
 
 .sidebar-container.light .chat-item.active {
   background-color: #dbe7ff;
-  border-left: 0.4rem solid #1b74e4;
+  border-left: 0.4rem solid #1f9161;
 }
 
 .sidebar-container.light .chat-item.active .chat-name {
-  color: #1b74e4;
+  color: #1f9161;
   font-weight: 700;
 }
 
@@ -68,12 +68,12 @@
 }
 
 .sidebar-container.light .icon-btn:hover {
-  color: #1b74e4;
+  color: #1cf89c;
 }
 
 /* ====== MAIN CHAT ====== */
 .main-chat.light .chat-header {
-  background-color: #f0f2f5;
+  background-color: #f6f6f7;
   border-bottom: 1px solid #dddfe2;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .main-chat.light .chat-body {
-  background-color: #f0f2f5;
+  background-color: #f6f6f7;
 }
 
 .main-chat.light .message.left .msg-text {
@@ -95,21 +95,21 @@
 }
 
 .main-chat.light .message.right .msg-text {
-  background-color: #0084ff;
-  color: #ffffff;
+  background-color: #befad5;
+  color: #050505;
 }
 
 .main-chat.light .chat-input {
-  background-color: #f0f2f5;
+  background-color: #f6f6f7;
   border-top: 1px solid #dddfe2;
 }
 
-.main-chat.light .chat-input input {
+.main-chat.light .chat-input textarea {
   background-color: #e4e6eb;
   color: #050505;
 }
 
-.main-chat.light .chat-input input::placeholder {
+.main-chat.light .chat-input textarea::placeholder {
   color: #65676b;
 }
 
@@ -120,20 +120,39 @@
 
 .main-chat.light .chat-btn:hover,
 .main-chat.light .chat-tools button:hover {
-  color: #1b74e4;
+  color: #1cf89c;
 }
 
 .main-chat.light .send-btn {
-  color: #1b74e4;
+  color: #1cf89c;
 }
 
 .main-chat.light .send-btn:hover {
-  color: #1877f2;
+  color: #1cf89c;
+}
+
+.main-chat.light .message.right .msg-time-popup,
+.main-chat.light .message.left .msg-time-popup {
+  color: black;
+}
+
+.main-chat.light .msg-menu {
+  background: #befad57e;
+  color: #01802b;
+}
+
+/* Chế độ tối (dark theme) — đổi màu scrollbar cho phù hợp */
+.main-chat.light .chat-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c5c7ca, #a8aaad);
+}
+
+.main-chat.light .chat-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #b1b1b3, #7b7c7e); /* Xanh lá khi hover */
 }
 
 /* ====== INFO USER ====== */
 .info-user-panel.light {
-  background-color: #f0f2f5;
+  background-color: #f6f6f7;
   color: #050505;
 }
 
@@ -155,6 +174,6 @@
 }
 
 .info-user-panel.light .icon:hover {
-  color: #1b74e4;
+  color: #1cf89c;
   background-color: #e4e6eb;
 }

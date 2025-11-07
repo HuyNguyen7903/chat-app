@@ -24,9 +24,28 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     setIsVisible(true);
   }, []);
 
-  // Đóng panel ngay lập tức, không animation
   const handleClose = () => {
     onClose();
+  };
+
+  // ✅ Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
+  const timeAgo = (timestamp) => {
+    if (!timestamp) return "";
+    const time =
+      timestamp.toString().length === 10 ? timestamp * 1000 : timestamp;
+    const diff = Date.now() - new Date(time).getTime();
+
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (seconds < 60) return "vừa xong";
+    if (minutes < 60) return `${minutes} phút trước`;
+    if (hours < 24) return `${hours} giờ trước`;
+    if (days < 7) return `${days} ngày trước`;
+    return `${weeks} tuần trước`;
   };
 
   // Gọi MockAPI lấy thông tin chi tiết chat
@@ -39,8 +58,28 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     }
   }, [chat]);
 
-  // Dữ liệu hiển thị (ưu tiên dữ liệu từ API)
-  const display = chatDetail || chat;
+  // ✅ Dữ liệu hiển thị (ưu tiên API, nhưng giữ lại messages từ chat)
+  const display = chatDetail
+    ? { ...chatDetail, messages: chat?.messages || [] }
+    : chat;
+
+  // ✅ Tính thời gian hoạt động cuối cùng (giống MainChat)
+  const lastActive = (() => {
+    if (display?.messages && display.messages.length > 0) {
+      const otherMsgs = display.messages.filter((m) => m.from !== "me");
+      if (otherMsgs.length > 0) {
+        const lastMsg = otherMsgs[otherMsgs.length - 1];
+        return timeAgo(lastMsg.createdAt);
+      }
+    }
+
+    // Nếu không có messages, fallback sang lastMessageTime
+    if (display?.lastMessageTime) {
+      return timeAgo(display.lastMessageTime);
+    }
+
+    return "chưa có hoạt động";
+  })();
 
   return (
     <div className="info-user">
@@ -57,7 +96,7 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
               className="info-avatar"
             />
             <h3 className="info-name">{display?.name || "Người dùng"}</h3>
-            <p className="status">Hoạt động {display?.time || "vừa xong"}</p>
+            <p className="status">Hoạt động {lastActive}</p>
 
             <div className="info-icons">
               <button className="icon" title="Trang cá nhân">
