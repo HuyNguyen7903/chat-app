@@ -1,0 +1,157 @@
+/* ====== WRAPPER ====== */
+.phone-signup-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ====== CONTAINER ====== */
+.phone-signup-container,
+.phone-signup-wrapper form {
+  width: 360px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.phone-signup-wrapper h2 {
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: #333;
+  font-weight: 600;
+}
+
+/* ====== INPUT STYLES ====== */
+.phone-signup-wrapper input[type="tel"],
+.phone-signup-wrapper input[type="password"] {
+  width: 100%;
+  padding: 15px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.phone-signup-wrapper input:focus {
+  border-color: #17dd8a;
+  box-shadow: 0 0 0 3px rgba(23, 221, 138, 0.15);
+}
+
+.phone-signup-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+}
+
+/* ====== BUTTONS ====== */
+.phone-signup-wrapper button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.phone-signup-wrapper button[type="submit"] {
+  background-color: #17dd8a;
+  color: #fff;
+}
+
+.phone-signup-wrapper button[type="submit"]:hover {
+  background-color: #14c178;
+}
+
+.phone-signup-wrapper .action-btn {
+  background-color: transparent;
+  border: 1px solid #17dd8a;
+  color: #17dd8a;
+}
+
+.phone-signup-wrapper .action-btn:hover {
+  background-color: #17dd8a;
+  color: #fff;
+}
+
+.phone-signup-footer .link-btn {
+  background: none;
+  border: none;
+  color: #17dd8a;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+  transition: color 0.3s ease;
+  width: auto;
+  padding: 0;
+  font-size: 12px;
+}
+
+.phone-signup-footer .link-btn:hover {
+  color: #079459;
+}
+
+/* ====== OTP BOXES ====== */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.otp-container input {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.otp-container input:focus {
+  border-color: #17dd8a;
+  box-shadow: 0 0 0 3px rgba(23, 221, 138, 0.2);
+}
+
+/* ====== ANIMATION ====== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 480px) {
+  .phone-signup-wrapper form {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .otp-container input {
+    width: 42px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+}

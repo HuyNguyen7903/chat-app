@@ -114,12 +114,45 @@ body {
   transform: scale(1.1);
 }
 
+/* ===== Remember Me ===== */
+.remember-me {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  gap: 0.5rem;
+}
+
+.remember-me input[type="checkbox"] {
+  accent-color: #17dd8a;
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+.remember-me label {
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .remember-me label {
+    font-size: 1rem;
+  }
+}
+
 /* ========== SIGN-IN / SIGN-UP PANELS ========== */
 .form-container {
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.7s ease-in-out;
+}
+.form-container input:focus {
+  border-color: #17dd8a;
+  box-shadow: 0 0 0 3px rgba(23, 221, 138, 0.15);
 }
 
 .sign-in {
