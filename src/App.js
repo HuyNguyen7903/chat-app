@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthForm from "./components/AuthForm/AuthForm";
 import ChatRoom from "./components/ChatRoom//Index/Index";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "../src/routes/ProtectedRoute";
 
 function App() {
   return (

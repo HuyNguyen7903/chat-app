@@ -3,8 +3,9 @@ import "./AuthForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, signupUser } from "../../redux/authSlice";
-import { FaGoogle, FaFacebookF, FaApple, FaPhoneAlt } from "react-icons/fa";
-import logo from "../Assets/bglogin.jpg";
+import { FaGoogle, FaFacebookF, FaPhoneAlt } from "react-icons/fa";
+import { SiZalo } from "react-icons/si";
+import logo from "../assets/bglogin.jpg";
 
 export default function AuthForm() {
   const [isActive, setIsActive] = useState(false);
@@ -72,8 +73,8 @@ export default function AuthForm() {
               <a href="#" className="icon phone">
                 <FaPhoneAlt />
               </a>
-              <a href="#" className="icon apple">
-                <FaApple />
+              <a href="#" className="icon zalo">
+                <SiZalo />
               </a>
             </div>
             <span>or use your email for registration</span>
@@ -119,8 +120,8 @@ export default function AuthForm() {
               <a href="#" className="icon phone">
                 <FaPhoneAlt />
               </a>
-              <a href="#" className="icon apple">
-                <FaApple />
+              <a href="#" className="icon zalo">
+                <SiZalo />
               </a>
             </div>
             <span>or use your email password</span>

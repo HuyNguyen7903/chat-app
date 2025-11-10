@@ -90,6 +90,9 @@ body {
   font-size: 2rem;
   color: #17dd8a;
 }
+.zalo svg {
+  transform: scale(1.5);
+}
 
 .social-icons {
   margin: 2rem 0;
