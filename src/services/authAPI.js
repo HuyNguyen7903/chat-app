@@ -14,7 +14,7 @@ export const signup = async (data) => {
 // Đăng nhập (email hoặc phone)
 export const login = async (identifier, password) => {
   // Xác định là email hay phone
-  const isPhone = /^\d{9,15}$/.test(identifier);
+  const isPhone = /^\d{10,15}$/.test(identifier);
   const query = isPhone ? `phone=${identifier}` : `email=${identifier}`;
 
   const res = await API.get(`/users?${query}`);

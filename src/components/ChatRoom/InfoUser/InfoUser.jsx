@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./InfoUser.css";
 import {
+  FaBan,
+  FaThumbsDown,
   FaUser,
   FaBellSlash,
   FaSearch,
@@ -8,14 +9,14 @@ import {
   FaChevronUp,
   FaTimes,
 } from "react-icons/fa";
-import axios from "axios";
+import "./InfoUser.css";
+import { getChatDetail } from "../../../services/api";
 
 export default function InfoUser({ onClose, chat, theme = "dark" }) {
   const [openSection, setOpenSection] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [chatDetail, setChatDetail] = useState(null);
 
-  // Toggle mở/đóng từng section
   const toggleSection = (section) =>
     setOpenSection(openSection === section ? null : section);
 
@@ -27,7 +28,22 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     onClose();
   };
 
-  // Hàm hiển thị dạng "vừa xong", "3 phút trước", "2 ngày trước", ...
+  useEffect(() => {
+    async function fetchChatDetail() {
+      if (chat?.id) {
+        try {
+          const res = await getChatDetail(chat.id);
+          setChatDetail(res.data);
+        } catch (err) {
+          console.error("Lỗi lấy chi tiết chat:", err);
+        }
+      }
+    }
+
+    fetchChatDetail();
+  }, [chat]);
+
+  // Hàm hiển thị thời gian
   const timeAgo = (timestamp) => {
     if (!timestamp) return "";
     const time =
@@ -47,22 +63,11 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
     return `${weeks} tuần trước`;
   };
 
-  // Gọi MockAPI lấy thông tin chi tiết chat
-  useEffect(() => {
-    if (chat?.id) {
-      axios
-        .get(`https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${chat.id}`)
-        .then((res) => setChatDetail(res.data))
-        .catch((err) => console.error("Lỗi lấy chi tiết chat:", err));
-    }
-  }, [chat]);
-
-  // Dữ liệu hiển thị (ưu tiên API, nhưng giữ lại messages từ chat)
+  // Dữ liệu hiển thị
   const display = chatDetail
     ? { ...chatDetail, messages: chat?.messages || [] }
     : chat;
 
-  // Tính thời gian hoạt động cuối cùng (giống MainChat)
   const lastActive = (() => {
     if (display?.messages && display.messages.length > 0) {
       const otherMsgs = display.messages.filter((m) => m.from !== "me");
@@ -72,7 +77,6 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
       }
     }
 
-    // Nếu không có messages, fallback sang lastMessageTime
     if (display?.lastMessageTime) {
       return timeAgo(display.lastMessageTime);
     }
@@ -143,6 +147,16 @@ export default function InfoUser({ onClose, chat, theme = "dark" }) {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* FOOTER */}
+          <div className="info-footer">
+            <button className="danger-btn">
+              <FaBan /> Block {display?.name || "người này"}
+            </button>
+            <button className="danger-btn">
+              <FaThumbsDown /> Report {display?.name || "người này"}
+            </button>
           </div>
         </div>
       </div>

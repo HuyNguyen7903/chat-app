@@ -5,8 +5,12 @@ import InfoUser from "../InfoUser/InfoUser";
 import "../../themes/theme-dark.css";
 import "../../themes/theme-light.css";
 import "./Index.css";
-import { getChats, getMessages } from "../../../services/api";
-import axios from "axios";
+import {
+  getChats,
+  getMessages,
+  getAllMessages,
+  updateChat,
+} from "../../../services/api";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setChats,
@@ -25,7 +29,6 @@ export default function ChatRoom() {
   const theme = useSelector((state) => state.theme.mode);
   const filter = useSelector((state) => state.chat.filter);
 
-  // local state riêng (không đưa vào Redux)
   const [showInfo, setShowInfo] = useState(false);
 
   // Lấy danh sách chat từ MockAPI
@@ -35,13 +38,11 @@ export default function ChatRoom() {
         const res = await getChats();
         const chatList = res.data;
 
-        // Lấy tất cả messages
-        const resMessages = await axios.get(
-          "https://6905d07aee3d0d14c133cc68.mockapi.io/messages"
-        );
+        // ✅ Lấy toàn bộ messages qua api.js
+        const resMessages = await getAllMessages();
         const allMessages = resMessages.data;
 
-        // Ghép messages vào mỗi chat
+        // Ghép messages vào từng chat
         const mergedChats = chatList.map((chat) => {
           const chatMessages = allMessages.filter((msg) => {
             const msgChatId = msg.chatId.replace("chatId ", "");
@@ -62,35 +63,29 @@ export default function ChatRoom() {
           }
         });
 
-        // Gửi dữ liệu vào Redux
         dispatch(setChats(mergedChats));
 
-        // Nếu chưa có selectedChat thì chọn đoạn đầu tiên
+        // Nếu chưa có selectedChat → chọn đoạn đầu tiên
         if (mergedChats.length > 0 && !selectedChat) {
           const firstChat = mergedChats[0];
 
           try {
-            // Gọi API lấy messages riêng cho chắc chắn
+            // Lấy messages của chat đầu tiên
             const resMsgs = await getMessages(firstChat.id);
             let chatMessages = resMsgs.data || [];
 
-            // Sắp xếp theo thời gian
             chatMessages = chatMessages.sort(
               (a, b) => a.createdAt - b.createdAt
             );
 
-            // Nếu đoạn đầu tiên chưa đọc → cập nhật thành đã đọc
+            // ✅ Dùng updateChat() thay cho axios.put()
             if (firstChat.unread) {
-              await axios.put(
-                `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${firstChat.id}`,
-                { unread: false }
-              );
+              await updateChat(firstChat.id, { unread: false });
               dispatch(
                 updateChatUnread({ chatId: firstChat.id, unread: false })
               );
             }
 
-            // Gửi vào Redux: có cả messages, không bị trống
             dispatch(setSelectedChat({ ...firstChat, messages: chatMessages }));
           } catch (err) {
             console.error("Không thể load tin nhắn đầu tiên:", err);
@@ -107,12 +102,11 @@ export default function ChatRoom() {
   // Khi chọn 1 chat
   const handleSelectChat = async (chat) => {
     try {
+      // Nếu chưa đọc → cập nhật lại
       if (chat.unread) {
         try {
-          await axios.put(
-            `https://6905d07aee3d0d14c133cc68.mockapi.io/chats/${chat.id}`,
-            { unread: false }
-          );
+          // ✅ Dùng updateChat() thay cho axios.put()
+          await updateChat(chat.id, { unread: false });
           dispatch(updateChatUnread({ chatId: chat.id, unread: false }));
         } catch (updateErr) {
           console.error("Không thể cập nhật trạng thái đọc:", updateErr);
@@ -122,7 +116,6 @@ export default function ChatRoom() {
       const res = await getMessages(chat.id);
       let messages = res.data || [];
 
-      // Sắp xếp tin nhắn theo thời gian tăng dần
       messages = messages.sort((a, b) => a.createdAt - b.createdAt);
 
       dispatch(setSelectedChat({ ...chat, messages, unread: false }));

@@ -50,6 +50,28 @@
   user-select: none;
 }
 
+/* User header */
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
 /* MENU DROPDOWN */
 .menu-wrapper {
   position: relative;

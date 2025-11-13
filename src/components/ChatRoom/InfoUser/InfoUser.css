@@ -4,7 +4,7 @@
   opacity: 1;
   transform: none;
   transition: none;
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem 1rem 1rem 0rem;
 }
 
 /* KHUNG CHÍNH */
@@ -110,6 +110,38 @@
   font-size: 1.3rem;
   line-height: 1.5;
   border-top: 0.1rem solid #3a3b3c;
+}
+/* FOOTER BUTTONS */
+.info-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.6rem;
+}
+
+/* Nút đỏ */
+.danger-btn {
+  display: flex;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  color: #ff3b5c;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.danger-btn:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.danger-btn svg {
+  font-size: 1.4rem;
 }
 
 /* RESPONSIVE */

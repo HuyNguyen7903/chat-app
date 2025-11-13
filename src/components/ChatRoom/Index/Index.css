@@ -55,3 +55,53 @@
   max-width: calc(100% - 540px);
   flex: 1;
 }
+
+/* === RESPONSIVE CHAT ROOM === */
+/* Khi màn hình nhỏ hơn 992px: InfoUser phủ toàn bộ MainChat */
+@media (max-width: 992px) {
+  .chat-room .info-user {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: calc(100vw - 320px) !important;
+    height: 100vh !important;
+    z-index: 10;
+    border-left: none;
+    box-shadow: none;
+    padding-left: 1rem;
+  }
+
+  .chat-room.dark .info-user {
+    background-color: var(--dark-bg, #000);
+  }
+
+  .chat-room.light .info-user {
+    background-color: var(--light-bg, #fff);
+  }
+
+  .chat-room .main-chat {
+    padding-right: 1rem;
+  }
+
+  /* Khi InfoUser mở → ẩn MainChat phía dưới */
+  .chat-room:has(.info-user .info-user-container) .main-chat {
+    display: none;
+  }
+}
+
+/* Khi màn hình nhỏ hơn 600px: ẩn Sidebar, InfoUser full màn hình */
+@media (max-width: 600px) {
+  .chat-room .sidebar {
+    display: none;
+  }
+
+  /* MainChat full width */
+  .chat-room .main-chat {
+    max-width: 100% !important;
+  }
+
+  /* InfoUser lúc này phủ toàn màn hình */
+  .chat-room .info-user {
+    width: 100vw !important;
+  }
+}

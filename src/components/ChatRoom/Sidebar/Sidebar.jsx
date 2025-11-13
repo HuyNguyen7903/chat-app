@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import { FaEllipsisH, FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import InfoUser from "../InfoUser/InfoUser";
-import { useDispatch } from "react-redux";
+import { FaEllipsisH, FaSearch, FaSun, FaMoon, FaPen } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -15,12 +14,17 @@ export default function Sidebar({
   filter,
   setFilter,
 }) {
-  const [showInfo, setShowInfo] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Lấy user từ Redux (mock nếu chưa có)
+  const user = useSelector((state) => state.auth.user) || {
+    name: "Người dùng",
+    avatar: "https://i.pravatar.cc/150?img=3",
+  };
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -32,6 +36,10 @@ export default function Sidebar({
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
+  };
+
+  const handleNewMessage = () => {
+    alert("Tạo tin nhắn mới");
   };
 
   const timeAgo = (timestamp) => {
@@ -65,10 +73,17 @@ export default function Sidebar({
       <div className="sidebar">
         {/* HEADER */}
         <div className="sidebar-header">
-          <h2>Đoạn chat</h2>
+          <div className="user-header">
+            <img src={user.avatar} alt="User Avatar" className="user-avatar" />
+            <span className="user-name">{user.name}</span>
+          </div>
+
           <div className="header-icons">
             <button className="icon-btn" onClick={toggleTheme}>
               {theme === "dark" ? <FaSun /> : <FaMoon />}
+            </button>
+            <button className="icon-btn" onClick={handleNewMessage}>
+              <FaPen />
             </button>
 
             <div className="menu-wrapper">
@@ -78,11 +93,8 @@ export default function Sidebar({
 
               {showOptions && (
                 <div className="dropdown-menu">
-                  <button onClick={() => alert("New Chat")}>
-                    Đoạn chat mới
-                  </button>
-                  <button onClick={() => alert("New Group")}>Tạo nhóm</button>
-                  <button onClick={() => alert("Settings")}>Tùy chỉnh</button>
+                  <button onClick={() => alert("Tạo nhóm")}>Tạo nhóm</button>
+                  <button onClick={() => alert("Tùy chỉnh")}>Tùy chỉnh</button>
                   <button onClick={handleLogout}>Đăng xuất</button>
                 </div>
               )}
@@ -149,21 +161,10 @@ export default function Sidebar({
               </li>
             ))
           ) : (
-            <li className="no-chat">Không có đoạn chat nào chưa đọc</li>
+            <li className="no-chat">Không có đoạn chat nào</li>
           )}
         </ul>
       </div>
-
-      {/* INFO USER */}
-      {showInfo && (
-        <div className="info-user-overlay">
-          <InfoUser
-            theme={theme}
-            chat={selectedChat}
-            onClose={() => setShowInfo(false)}
-          />
-        </div>
-      )}
     </div>
   );
 }
