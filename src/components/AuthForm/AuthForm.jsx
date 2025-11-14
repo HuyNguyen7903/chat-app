@@ -7,6 +7,8 @@ import { FaGoogle, FaFacebookF, FaPhoneAlt } from "react-icons/fa";
 import { SiZalo } from "react-icons/si";
 import PhoneSignup from "./PhoneSignup";
 import logo from "../assets/bglogin.jpg";
+const ZALO_APP_ID = "693069574775036123";
+const REDIRECT_URI = "http://localhost:3000/auth/zalo/callback";
 
 export default function AuthForm() {
   const [isActive, setIsActive] = useState(false);
@@ -20,6 +22,11 @@ export default function AuthForm() {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
 
+  const loginZalo = () => {
+    window.location.href = `https://oauth.zalo.me/v4/permission?app_id=${ZALO_APP_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+    )}&state=achat`;
+  };
   // Nếu có token thì vào trang /chat
   useEffect(() => {
     if (token) {
@@ -129,7 +136,7 @@ export default function AuthForm() {
                   >
                     <FaPhoneAlt />
                   </a>
-                  <a href="#" className="icon zalo">
+                  <a className="icon zalo" onClick={loginZalo}>
                     <SiZalo />
                   </a>
                 </div>
@@ -189,7 +196,7 @@ export default function AuthForm() {
                   <a href="#" className="icon facebook">
                     <FaFacebookF />
                   </a>
-                  <a href="#" className="icon zalo">
+                  <a className="icon zalo" onClick={loginZalo}>
                     <SiZalo />
                   </a>
                 </div>
